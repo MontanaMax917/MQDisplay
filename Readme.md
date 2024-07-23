@@ -15,6 +15,7 @@ Features:
 - set audio volume
 - set screen brightness
 - set short screen message
+- set topic for all devices or individual device
 - uses libVLC for fast, compatible video rendering
 - uses paho client for mqtt communications
 
