@@ -1,0 +1,89 @@
+Setup.txt		May 2023
+
+Setup listener.py on NAS server
+
+Listen to Lorex NVR alerts and publish to MQTT 
+
+Set python version: (should be 3.7)
+  python --version   <- get current version
+  sudo rm /usr/bin/python
+  sudo ln -s /usr/bin/python3 /usr/bin/python
+  sudo ln -s /usr/bin/python3.10 /usr/bin/python
+
+
+Install:
+  
+  pip install pycurl
+
+
+
+
+---------------------------------------------
+Systemd setup as service:
+https://www.thedigitalpictureframe.com/ultimate-guide-systemd-autostart-scripts-raspberry-pi/
+
+
+sudo nano /lib/systemd/system/listener.service
+
+- paste into file
+--------------
+[Unit]
+Description=listener Service
+After=multi-user.target
+
+[Service]
+Type=idle
+User=pi
+ExecStart=/usr/bin/python3 /home/pi/lorex/listener.py
+WorkingDirectory= /home/pi/lorex
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+--------------
+
+- set permissions
+sudo chmod 644 /lib/systemd/system/listener.service
+
+- Enable to start at boot
+sudo systemctl daemon-reload
+sudo systemctl enable listener.service
+
+
+sudo systemctl start listener.service		<- start
+sudo systemctl stop listener.service		<- stop
+sudo systemctl daemon-reload			<- restart
+sudo systemctl disable listener.service		<- disable
+sudo systemctl status listener.service		<- status
+sudo systemctl is-enabled listener.service	<- check enabled
+
+systemctl list-units --type=service		<- list all services
+
+
+rtsp://user:password@192.168.1.20:554/cam/realmonitor?channel=1&subtype=2 
+rtsp://user:password@192.168.1.20:554/cam/realmonitor?channel=2&subtype=2 
+rtsp://user:password@192.168.1.20:554/cam/realmonitor?channel=3&subtype=2 
+rtsp://user:password@192.168.1.20:554/cam/realmonitor?channel=4&subtype=1
+rtsp://user:password@192.168.1.20:554/cam/realmonitor?channel=5&subtype=2
+
+
+
+payload.camera
+{"Code": "VideoMotion", "action": "Stop", "index": "3", "ObjectType": "Unknown", "LocalTime": "2024/06/25 14:52:27", "camera": "Driveway"}
+{"Code": "CrossRegionDetection", "action": "Stop", "index": "2", "ObjectType": "Human,", "LocalTime": "2024/06/25 14:51:12", "camera": "Back Door"}
+{"Code": "VideoMotion", "action": "Start", "index": "3", "ObjectType": "Unknown", "LocalTime": "2024/06/25 14:51:47", "camera": "Driveway"}
+{"Code": "CrossRegionDetection", "action": "Start", "index": "2", "ObjectType": "Vehicle,", "LocalTime": "2024/06/25 14:52:06", "camera": "Back Door"}
+{"Code": "VideoMotion", "action": "Start", "index": "2", "ObjectType": "Unknown", "LocalTime": "2024/06/25 14:52:12", "camera": "Back Door"}
+{"Code": "CrossRegionDetection", "action": "Stop", "index": "2", "ObjectType": "Vehicle,", "LocalTime": "2024/06/25 14:52:13", "camera": "Back Door"}
+{"Code": "CrossRegionDetection", "action": "Start", "index": "4", "ObjectType": "Vehicle,", "LocalTime": "2024/06/25 14:52:14", "camera": "Garage"}
+{"Code": "CrossRegionDetection", "action": "Stop", "index": "4", "ObjectType": "Vehicle,", "LocalTime": "2024/06/25 14:52:21", "camera": "Garage"}
+{"Code": "VideoMotion", "action": "Stop", "index": "3", "ObjectType": "Unknown", "LocalTime": "2024/06/25 14:52:27", "camera": "Driveway"}
+{"Code": "CrossRegionDetection", "action": "Start", "index": "4", "ObjectType": "Human,", "LocalTime": "2024/06/25 14:52:49", "camera": "Garage"}
+{"Code": "VideoMotion", "action": "Stop", "index": "2", "ObjectType": "Unknown", "LocalTime": "2024/06/25 14:52:52", "camera": "Back Door"}
+{"Code": "CrossRegionDetection", "action": "Stop", "index": "4", "ObjectType": "Human,", "LocalTime": "2024/06/25 14:52:55", "camera": "Garage"}
+{"Code": "CrossRegionDetection", "action": "Start", "index": "4", "ObjectType": "Human,", "LocalTime": "2024/06/25 15:30:23", "camera": "Garage"}
+
+
+
+
+
