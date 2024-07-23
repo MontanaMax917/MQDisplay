@@ -29,22 +29,22 @@ class EntryActivity : Activity() {
         /** return Class name of Activity to show  */
         get() {
             // NOTE - Place logic here to determine which screen to show next
-            var host: String = ""
-            var broker: String = ""
+//            var host: String
+//            var broker: String
             // Fetching the stored data from the SharedPreference
             val sh = getSharedPreferences("MQDisplay", MODE_PRIVATE)
-            host = sh.getString("host", "0").toString()
-            broker = sh.getString("broker", "0").toString()
+            val host = sh.getString("host", "0").toString()
+            val broker = sh.getString("broker", "0").toString()
 
             println("screenClassName --- $host --- $broker ---")
 
-            if (host.length > 0 && broker.length > 3) {
-                var activity = MainActivity::class.java.getName()
+            if (host.isNotEmpty() && broker.length > 3) {
+                val activity = MainActivity::class.java.name
                 println("set Activity $activity ---------------")
                 return activity
             } else {
                 // Default is used in this demo code
-                var activity = SettingFragment::class.java.getName()
+                val activity = SettingFragment::class.java.name
                 println("not set Activity $activity ---------------")
                 return activity
             }
