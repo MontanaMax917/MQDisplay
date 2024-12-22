@@ -47,9 +47,9 @@ dependencies {
 
 //    https://mvnrepository.com/artifact/org.videolan.android/libvlc-all  <-- all versions
 //    implementation ("org.videolan.android:libvlc-all:3.3.4")
-    implementation ("org.videolan.android:libvlc-all:3.6.0-eap12")
+    implementation ("org.videolan.android:libvlc-all:3.6.0-eap14")
 
-    implementation ("androidx.localbroadcastmanager:localbroadcastmanager:1.0.0")
+    implementation ("androidx.localbroadcastmanager:localbroadcastmanager:1.1.0")
     implementation ("org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.2.4")
     implementation ("org.eclipse.paho:org.eclipse.paho.android.service:1.1.1")
 }

@@ -46,12 +46,13 @@ class SettingFragment : AppCompatActivity() {
         // Creating a shared pref object with a file host "MySharedPref" in private mode
         val sharedPreferences = getSharedPreferences("MQDisplay", MODE_PRIVATE)
         val myEdit = sharedPreferences.edit()
+        val hostname =  host.text.toString()
+        hostname.replace(' ', '_')   // space not allowed by mqtt
+        hostname.replace('/', '_')   // slash not allowed by mqtt
 
         // write all the data entered by the user in SharedPreference and apply
-        myEdit.putString("host", host.text.toString())
+        myEdit.putString("host", hostname)
         myEdit.putString("broker", broker.text.toString())
         myEdit.apply()
     }
-
-
 }
