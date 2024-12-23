@@ -59,7 +59,7 @@ sudo systemctl is-enabled listener.service	<- check enabled
 
 systemctl list-units --type=service		<- list all services
 
-
+- example camera url
 rtsp://user:password@192.168.1.20:554/cam/realmonitor?channel=1&subtype=2 
 rtsp://user:password@192.168.1.20:554/cam/realmonitor?channel=2&subtype=2 
 rtsp://user:password@192.168.1.20:554/cam/realmonitor?channel=3&subtype=2 
